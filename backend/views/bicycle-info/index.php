@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'layout'=>"{items}\n{summary}",
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -34,6 +35,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'quantity',
             [
+                'label'=>'quantity',
+                'format' => 'raw',
+                'value' => function($data){
+                    $quantity = $data['quantity'];
+                    return ""; 
+                }
+            ],
+            [
+                'label'=>'Total Price',
+                'value' => function($data){
+                    $total = $data['price']*$data['quantity'];
+                    return $total; 
+                }
+            ],
+            [
                 'label'=>'Image',
                 'format'=>'raw',
                 'value' => function($data){
@@ -44,5 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+
+        
     ]); ?>
 <?php Pjax::end(); ?></div>
